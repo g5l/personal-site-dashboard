@@ -1,0 +1,7 @@
+{
+  "name": "g5l-dashboard",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Gabriel Debona <gabriel.debona@gmail.com>",
+  "license": "MIT"
+}
