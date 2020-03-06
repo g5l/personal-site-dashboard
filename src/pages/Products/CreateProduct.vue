@@ -11,6 +11,14 @@
         />
       </div>
     </div>
+    <md-snackbar
+      md-position="left"
+      :md-duration="4000"
+      :md-active.sync="showSnackbar"
+      md-persistent
+    >
+      <span>Produto criado com sucesso!</span>
+    </md-snackbar>
   </div>
 </template>
 
@@ -31,7 +39,8 @@ export default {
         image: "",
         description: ""
       },
-      sending: false
+      sending: false,
+      showSnackbar: false,
     };
   },
   mounted() {
@@ -63,7 +72,12 @@ export default {
     },
     sendRequest() {
       this.sending = true;
-      createProduct(this.product).then(data => { console.log({data}) });
+      createProduct(this.product)
+        .then(data => { 
+          this.product = {};
+          this.showSnackbar = true;
+          this.sending = false;
+        });
     },
   },
 };

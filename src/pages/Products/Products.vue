@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="md-layout">
-      <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-20">
+      <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
         <md-button
           class="md-success"
           style="margin-left: auto; display: flex; margin-right: 15px"
@@ -16,11 +16,11 @@
         v-for="(product, key) in products"
         :id="key"
         :key="key"
-        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100"
+        class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-33"
       >
         <card
           :card-title="product.name"
-          :card-image="product.logo"
+          :card-image="productImage(product.image)"
           @update="handleUpdate(product.id)"
           @remove="handleDelete(product.id)"
         />
@@ -35,19 +35,19 @@
       @md-confirm="onConfirm"
     />
     <md-snackbar
-      md-position="left"
+      md-position="right"
       :md-duration="4000"
       :md-active.sync="showSnackbar"
       md-persistent
     >
-      <span>Excluido com sucesso!</span>
+      <span>Produto excluido com sucesso!</span>
     </md-snackbar>
   </div>
 </template>
 
 <script>
 import { Card } from "@/components";
-import { fetchProducts } from "@/api/product";
+import { fetchProducts, deleteProduct } from "@/api/product";
 
 export default {
   components: {
@@ -111,12 +111,7 @@ export default {
       this.id = id;
     },
     delete(id) {
-      this.enterprise.forEach(function(element) {
-        if (element.id === id) {
-          element.status = element.status === "active" ? "inactive" : "active";
-          return;
-        }
-      });
+      deleteProduct(id);
       this.showSnackbar = true;
     },
     onCancel() {
@@ -125,7 +120,11 @@ export default {
     onConfirm() {
       this.confirmModalOpen = false;
       this.delete(this.id);
-    }
+    },
+    productImage(image) {
+      //add process.env.API_PATH
+      return 'http://localhost:3000' + image
+    },
   }
 };
 </script>

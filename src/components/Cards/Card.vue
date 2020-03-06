@@ -1,12 +1,13 @@
 <template>
   <md-card class="md-card-profile">
     <div class="md-card-avatar">
-      <img class="img" :src="cardImage" v-if="cardImage" />
-      <img class="img not-found" :src="notFound" v-else />
+      <img :src="cardImage" class="img"/>
     </div>
 
     <md-card-content>
-      <h4 class="card-title">{{ cardTitle }}</h4>
+      <h4 class="card-title">
+        {{ cardTitle }}
+      </h4>
       <md-button class="md-round md-warning" @click="update">
         Editar
       </md-button>
@@ -18,7 +19,7 @@
 </template>
 <script>
 export default {
-  name: "card",
+  name: "Card",
   props: {
     cardTitle: {
       type: String,
@@ -28,11 +29,6 @@ export default {
       type: String,
       default: require("@/assets/img/logo.png")
     }
-  },
-  data() {
-    return {
-      notFound: require("@/assets/img/logo.png")
-    };
   },
   methods: {
     update() {
