@@ -5,6 +5,10 @@
         <i class="material-icons" style="color: #ffffff">shopping_cart</i>
         <p>Produtos</p>
       </sidebar-link>
+      <sidebar-link to="/notices">
+        <i class="material-icons" style="color: #ffffff">archive</i>
+        <p>Blog</p>
+      </sidebar-link>
     </side-bar>
 
     <div class="main-panel">

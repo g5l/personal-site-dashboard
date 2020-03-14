@@ -3,8 +3,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import App from "./App";
+import svgSpriteLoader from './helpers/svg-sprite-loader'
 
 require('dotenv').config()
+
+const __svg__ = { path: './assets/icons/*.svg', name: './assets/[hash].sprite.svg' }
+svgSpriteLoader(__svg__.filename)
 
 // router setup
 import routes from "./routes/routes";

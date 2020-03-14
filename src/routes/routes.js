@@ -1,6 +1,13 @@
 import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
 
-import { Login, Products, CreateProduct, EditProduct } from "@/pages";
+import {
+  Login,
+  Products,
+  CreateProduct,
+  EditProduct,
+  Notices,
+  CreateNotice
+} from "@/pages";
 
 const routes = [
   {
@@ -23,6 +30,16 @@ const routes = [
         name: "editProduct",
         component: EditProduct,
         props: true
+      },
+      {
+        path: "notices",
+        name: "notices",
+        component: Notices
+      },
+      {
+        path: "createNotice",
+        name: "createNotice",
+        component: CreateNotice
       },
     ]
   },
