@@ -1,11 +1,7 @@
 <template>
   <div class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
     <side-bar>
-      <sidebar-link to="/products">
-        <i class="material-icons" style="color: #ffffff">shopping_cart</i>
-        <p>Produtos</p>
-      </sidebar-link>
-      <sidebar-link to="/notices">
+      <sidebar-link to="/posts">
         <i class="material-icons" style="color: #ffffff">archive</i>
         <p>Blog</p>
       </sidebar-link>

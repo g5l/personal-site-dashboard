@@ -4,8 +4,7 @@ import StatsCard from "./Cards/StatsCard.vue";
 import Card from "./Cards/Card.vue";
 
 //Forms
-import ProductForm from "./Forms/ProductForm.vue";
-import NoticeForm from "./Forms/NoticeForm.vue";
+import PostForm from "./Forms/PostForm.vue";
 
 //Icon
 import Icon from "./Icon";
@@ -25,8 +24,7 @@ export {
   NavTabsCard,
   StatsCard,
   Card,
-  ProductForm,
-  NoticeForm,
+  PostForm,
   Icon,
   NavTabsTable,
   OrderedTable,

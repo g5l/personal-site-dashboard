@@ -5,7 +5,7 @@
         <md-button
           class="md-success"
           style="margin-left: auto; display: flex; margin-right: 15px"
-          @click.native="createNotice()"
+          @click.native="createPost()"
         >
           Cadastrar
         </md-button>
@@ -16,20 +16,26 @@
         <md-card>
           <md-card-header data-background-color="orange">
             <h4 class="title">
-              Notícias
+              Postagens
             </h4>
           </md-card-header>
           <md-card-content>
-            <md-table v-model="notices" table-header-color="orange">
+            <md-table v-model="posts" table-header-color="orange">
               <md-table-row slot="md-table-row" slot-scope="{ item }">
                 <md-table-cell md-label="Título">
                   {{ item.title }}
                 </md-table-cell>
-                <md-table-cell md-label="Categoria">
-                  {{ item.notice_category_id }}
-                </md-table-cell>
                 <md-table-cell md-label="Data">
-                  {{ item.createdAt }}
+                  {{ dateFormated(item.createdAt) }}
+                </md-table-cell>
+                <md-table-cell md-label="Editar">
+                  <md-button
+                    class="md-warning"
+                    style="margin: auto;"
+                    @click.native="handleUpdate(item.slug)"
+                  >
+                    Editar
+                  </md-button>
                 </md-table-cell>
               </md-table-row>
             </md-table>
@@ -56,12 +62,12 @@
 </template>
 
 <script>
-import { fetchNotices, deleteNotice } from "@/api/notice";
+import { fetchPosts, deletePost } from "@/api/blog";
 
 export default {
   data() {
     return {
-      notices: [],
+      posts: [],
       confirmModalOpen: false,
       id: -1,
       showSnackbar: false
@@ -84,8 +90,8 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
-    fetchNotices().then(({ data }) => {
-      this.notices = data;
+    fetchPosts().then(({ data }) => {
+      this.posts = data;
     })
     .catch(e => {
       console.log(e)
@@ -104,18 +110,18 @@ export default {
         enterprise.status === "active" ? "Ativado" : "Desativado";
       return newEnterprise;
     },
-    createNotice() {
-      this.$router.push({ name: "createNotice" });
+    createPost() {
+      this.$router.push({ name: "createPost" });
     },
-    handleUpdate(id) {
-      this.$router.push({ name: "editNotice", params: { id } });
+    handleUpdate(slug) {
+      this.$router.push({ name: "editPost", params: { slug } });
     },
     handleDelete(id) {
       this.confirmModalOpen = true;
       this.id = id;
     },
     delete(id) {
-      deleteNotice(id);
+      deletePost(id);
       this.showSnackbar = true;
     },
     onCancel() {
@@ -129,6 +135,13 @@ export default {
       //add process.env.API_PATH
       return 'http://localhost:3000' + image
     },
+    dateFormated(date) {
+      const d = new Date(date);
+      const da = new Intl.DateTimeFormat('pt-br', { day: '2-digit' }).format(d);
+      const mo = new Intl.DateTimeFormat('pt-br', { month: '2-digit' }).format(d);
+      const ye = new Intl.DateTimeFormat('pt-br', { year: 'numeric' }).format(d);
+      return `${da}-${mo}-${ye}`;
+    }
   }
 };
 </script>

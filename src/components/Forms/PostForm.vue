@@ -39,39 +39,6 @@
             </md-field>
           </div>
 
-          <div class="md-layout-item md-small-size-100 md-size-50">
-            <md-field :class="getValidationClass('source')">
-              <label for="source">Fonte *</label>
-              <md-input id="source" v-model="form.source" name="source" />
-              <span v-if="!$v.form.source.required" class="md-error">
-                É preciso informar um fonte
-              </span>
-            </md-field>
-          </div>
-
-          <div class="md-layout-item md-small-size-100 md-size-50">
-            <md-field>
-              <md-select
-                id="category"
-                v-model="form.noticeCategoryId"
-                name="noticeCategoryId"
-                placeholder="Categoria"
-                required
-              >
-                <md-option
-                  v-for="category in categories"
-                  :key="category.id"
-                  :value="category.id"
-                >
-                  {{ category.name }}
-                </md-option>
-              </md-select>
-              <span v-if="!$v.form.noticeCategoryId.required" class="md-error">
-                É preciso informar uma categoria
-              </span>
-            </md-field>
-          </div>
-
           <div class="md-layout-item md-small-size-100 md-size-100">
             <editor-menu-bar
               v-slot="{ commands, isActive }"
@@ -257,7 +224,7 @@ import {
 } from 'tiptap-extensions'
 
 export default {
-  name: "NoticeForm",
+  name: "PostForm",
   components: {
     SpinnerButton,
     EditorMenuBar,
@@ -278,13 +245,9 @@ export default {
       type: String,
       default: ""
     },
-    notice: {
+    post: {
       type: Object,
       default: () => {}
-    },
-    categories: {
-      type: Array,
-      default: () => [],
     },
     loading: {
       type: Boolean,
@@ -294,7 +257,7 @@ export default {
   data() {
     return {
       btnDisabled: false,
-      form: this.notice,
+      form: this.post,
       editor: new Editor({
         extensions: [
           new Blockquote(),
@@ -320,19 +283,23 @@ export default {
     };
   },
   watch: {
-    notice(data) {
+    post(data) {
       this.form = data;
+      this.updateArticle(this.post.article)
     }
   },
   mounted() {
     this.editor.on('update', ({ getHTML }) => {
       this.form.article = getHTML();
-    })
+    });
   },
   beforeDestroy() {
     this.editor.destroy();
   },
   methods: {
+    updateArticle(article) {
+      this.editor.setContent(article);
+    },
     getValidationClass(fieldName) {
       const field = this.$v.form[fieldName];
 
@@ -364,12 +331,6 @@ export default {
         required
       },
       image: {
-        required,
-      },
-      source: {
-        required,
-      },
-      noticeCategoryId: {
         required,
       },
       article: {

@@ -2,44 +2,31 @@ import DashboardLayout from "@/pages/Layout/DashboardLayout.vue";
 
 import {
   Login,
-  Products,
-  CreateProduct,
-  EditProduct,
-  Notices,
-  CreateNotice
+  Posts,
+  CreatePost,
+  EditPost
 } from "@/pages";
 
 const routes = [
   {
     path: "/",
     component: DashboardLayout,
-    redirect: "/products",
+    redirect: "/posts",
     children: [
       {
-        path: "products",
-        name: "products",
-        component: Products
+        path: "posts",
+        name: "posts",
+        component: Posts
       },
       {
-        path: "createProduct",
-        name: "createProduct",
-        component: CreateProduct
+        path: "createPost",
+        name: "createPost",
+        component: CreatePost
       },
       {
-        path: "product/:id",
-        name: "editProduct",
-        component: EditProduct,
-        props: true
-      },
-      {
-        path: "notices",
-        name: "notices",
-        component: Notices
-      },
-      {
-        path: "createNotice",
-        name: "createNotice",
-        component: CreateNotice
+        path: "posts/:slug",
+        name: "editPost",
+        component: EditPost
       },
     ]
   },

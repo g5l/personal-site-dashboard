@@ -2,10 +2,10 @@
   <div class="content">
     <div class="md-layout">
       <div class="md-layout-item md-medium-size-100 md-size-100">
-        <product-form
-          title="Cadastrar Produto"
-          button-title="Cadastrar"
-          :product="product"
+        <post-form
+          title="Editar Post"
+          button-title="Editar"
+          :post="post"
           :loading="sending"
           @send-click="sendRequest"
         />
@@ -17,27 +17,27 @@
       :md-active.sync="showSnackbar"
       md-persistent
     >
-      <span>Produto criado com sucesso!</span>
+      <span>Postagem editada com sucesso!</span>
     </md-snackbar>
   </div>
 </template>
 
 <script>
-import { CharConverter, ProductForm } from "@/components";
-import { createProduct } from "@/api/product";
+import { CharConverter, PostForm } from "@/components";
+import { editPost, fetchPost } from "@/api/blog";
 
 export default {
-  name: "CreatePorduct",
+  name: "CreatePost",
   components: {
-    ProductForm
+    PostForm
   },
   data() {
     return {
-      product: {
+      post: {
         id: 0,
-        name: "",
+        title: "",
         image: "",
-        description: ""
+        article: "",
       },
       sending: false,
       showSnackbar: false,
@@ -45,6 +45,15 @@ export default {
   },
   mounted() {
     window.scrollTo(0, 0);
+
+    const postSlug = this.$route.params.slug;
+
+    fetchPost(postSlug).then(({ data }) => {
+      this.post = data;
+    })
+    .catch(e => {
+      console.log(e)
+    });
   },
   methods: {
     cloneAndCleanObj(obj) {
@@ -72,9 +81,9 @@ export default {
     },
     sendRequest() {
       this.sending = true;
-      createProduct(this.product)
+      editPost(this.post)
         .then(data => { 
-          this.product = {};
+          this.post = {};
           this.showSnackbar = true;
           this.sending = false;
         });
@@ -82,26 +91,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.create {
-  display: flex;
-  align-self: center;
-  height: 100%;
-  font-size: 40px;
-}
-
-.create.add-button {
-  display: flex;
-  justify-content: center;
-}
-
-.no-apartments-div {
-  position: relative;
-}
-
-.no-apartments-btn {
-  position: absolute;
-  top: 44.8%;
-}
-</style>
