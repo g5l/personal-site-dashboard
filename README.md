@@ -1,2 +1,2 @@
-# dashboard
-Dashboard template to freelance jobs
+# personal-site-dashboard
+Dashboard to my personal site.
